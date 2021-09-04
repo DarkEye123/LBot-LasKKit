@@ -8,10 +8,10 @@ namespace light_sensor
         return analogRead(LIGHT_SENSOR_PIN);
     }
 
-    void PrintToSerial(void)
+    void LogValue(void)
     {
         // Serial.println("analog value: " + ReadLightSensor());
-        Serial.println("analog value: ");
+        Serial.print("light sensor value: ");
         Serial.println(ReadLightSensor());
     }
 }

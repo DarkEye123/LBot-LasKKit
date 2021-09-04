@@ -16,7 +16,7 @@ void setup()
 
 void loop()
 {
+  light_sensor::LogValue();
   integrated_led::Blink();
   intelligent_led::SetRandomColorOnNextLed();
-  light_sensor::PrintToSerial();
 }

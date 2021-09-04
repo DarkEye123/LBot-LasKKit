@@ -1,18 +1,19 @@
+#include "../lib/integrated_led/integrated_led.h"
+#include "../lib/light_sensor/light_sensor.h"
+#include "../lib/Intelligent_led/intelligent_led.h"
+
 #include "Arduino.h"
-#include "IntegratedLed.hpp"
-#include "LightSensor.hpp"
-#include "IntelligentLed.hpp"
 
 void setup()
 {
   Serial.begin(9600);
-  integrated_led::setup();
-  intelligent_led::setup();
+  integrated_led::Setup();
+  intelligent_led::Setup();
 }
 
 void loop()
 {
-  integrated_led::blink();
-  intelligent_led::setRandomColorOnNextLed();
-  light_sensor::printToSerial();
+  integrated_led::Blink();
+  intelligent_led::SetRandomColorOnNextLed();
+  light_sensor::PrintToSerial();
 }

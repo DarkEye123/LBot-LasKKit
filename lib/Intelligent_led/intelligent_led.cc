@@ -9,7 +9,7 @@ Adafruit_NeoPixel rgb = Adafruit_NeoPixel(2, 13);
 namespace intelligent_led
 {
 
-    void setup()
+    void Setup()
     {
         rgb.begin();
         rgb.setBrightness(10);
@@ -23,7 +23,7 @@ namespace intelligent_led
         rgb.show();
     }
 
-    void setRandomColorOnNextLed()
+    void SetRandomColorOnNextLed()
     {
         setColor(rand() % 256, rand() % 256, rand() % 256, current_led % 2);
         current_led++;

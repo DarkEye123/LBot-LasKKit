@@ -2,13 +2,13 @@
 
 namespace integrated_led
 {
-    void setup()
+    void Setup()
     {
         // initialize LED digital pin as an output.
         pinMode(LED_BUILTIN, OUTPUT);
     }
 
-    void blink(bool serial_output_enabled = false, uint16_t waitFor = 500)
+    void Blink(bool serial_output_enabled = false, uint16_t waitFor = 500)
     {
         // turn the LED on (HIGH is the voltage level)
         if (serial_output_enabled)

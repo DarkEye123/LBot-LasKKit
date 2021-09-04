@@ -3,6 +3,6 @@
 
 namespace light_sensor
 {
-    void printToSerial(void);
-    int readLightSensor(void);
+    void PrintToSerial(void);
+    int ReadLightSensor(void);
 }

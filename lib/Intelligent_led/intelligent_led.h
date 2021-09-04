@@ -1,6 +1,6 @@
 namespace intelligent_led
 {
-    void setup();
+    void Setup();
     void setColor(byte r, byte g, byte b, byte led);
-    void setRandomColorOnNextLed();
+    void SetRandomColorOnNextLed();
 }

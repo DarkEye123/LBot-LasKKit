@@ -23,6 +23,11 @@ void setup()
 void loop()
 {
   button::LogValue();
+  button::RunOnPress([](void)
+                     {
+                       Serial.println("just pressing the button");
+                       bell::Buzz(100);
+                     });
   light_sensor::LogValue();
   integrated_led::Blink();
   intelligent_led::SetRandomColorOnNextLed();

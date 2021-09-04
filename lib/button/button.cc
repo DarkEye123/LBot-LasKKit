@@ -22,4 +22,12 @@ namespace button
     {
         return analogRead(BUTTON_PIN) < BREAKING_VALUE;
     }
+
+    void RunOnPress(void (*CallBack)(void))
+    {
+        if (IsPressed())
+        {
+            CallBack();
+        }
+    }
 }

@@ -5,4 +5,5 @@ namespace button
     bool IsPressed();
     void Setup();
     void LogValue();
+    void RunOnPress(void (*)(void));
 }

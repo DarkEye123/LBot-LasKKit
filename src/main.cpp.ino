@@ -7,6 +7,7 @@ void setup()
   // initialize LED digital pin as an output.
   pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(9600);
+  intelligent_led::setup();
 }
 
 void loop()

@@ -2,32 +2,29 @@
 
 namespace integrated_led
 {
+    unsigned long last_interval = 0;
+    int led_state = LOW;
+
     void Setup()
     {
         // initialize LED digital pin as an output.
         pinMode(LED_BUILTIN, OUTPUT);
+        last_interval = millis();
     }
 
     void Blink(bool serial_output_enabled = false, uint16_t wait_for = 500)
     {
-        // turn the LED on (HIGH is the voltage level)
-        if (serial_output_enabled)
+        unsigned long current = millis();
+        if (current - last_interval > wait_for)
         {
-
-            Serial.println("High");
+            last_interval = current;
+            led_state = led_state == LOW ? HIGH : LOW;
+            if (serial_output_enabled)
+            {
+                Serial.println(led_state == LOW ? "Low" : "High");
+            }
+            Serial.println(digitalRead(LED_BUILTIN));
+            digitalWrite(LED_BUILTIN, led_state);
         }
-        digitalWrite(LED_BUILTIN, HIGH);
-
-        // wait for a second
-        delay(wait_for);
-
-        // turn the LED off by making the voltage LOW
-        if (serial_output_enabled)
-        {
-
-            Serial.println("Low");
-        }
-        digitalWrite(LED_BUILTIN, LOW);
-        delay(wait_for);
     }
 }

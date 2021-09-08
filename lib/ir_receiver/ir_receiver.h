@@ -1,3 +1,6 @@
+#ifndef IR_RECEIVER_H
+#define IR_RECEIVER_H
+
 #define IR_RECEIVER_PIN 2
 
 struct Data
@@ -12,3 +15,5 @@ namespace ir_receiver
     void LogValue();
     Data *ReceiveData();
 }
+
+#endif

@@ -23,7 +23,6 @@ namespace integrated_led
             {
                 Serial.println(led_state == LOW ? "Low" : "High");
             }
-            Serial.println(digitalRead(LED_BUILTIN));
             digitalWrite(LED_BUILTIN, led_state);
         }
     }

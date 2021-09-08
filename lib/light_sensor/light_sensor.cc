@@ -10,7 +10,6 @@ namespace light_sensor
 
     void LogValue(void)
     {
-        // Serial.println("analog value: " + ReadLightSensor());
         Serial.print("light sensor value: ");
         Serial.println(ReadLightSensor());
     }

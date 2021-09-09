@@ -1,6 +1,6 @@
 // #include "../lib/integrated_led/integrated_led.h"
-#include "../lib/light_sensor/light_sensor.h"
 #include "../lib/intelligent_led/intelligent_led.h"
+#include "../lib/light_sensor/light_sensor.h"
 #include "../lib/bell/bell.h"
 #include "../lib/button/button.h"
 #include "../lib/ir_receiver/ir_receiver.h"
@@ -12,18 +12,17 @@ motors::MovementManager *movement_manager = nullptr;
 
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
+  // Serial.begin(9600);
 
   // integrated_led::Setup();
   intelligent_led::Setup();
   button::Setup();
 
   bell::Setup();
-  bell::Buzz();
-
-  ir_receiver::Setup();
 
   movement_manager = motors::Setup();
+  ir_receiver::Setup(); // makes initial ring to hide (dunno why) TODO
 }
 
 void loop()
@@ -32,12 +31,11 @@ void loop()
 
   button::RunOnPress([](void)
                      { light_sensor::LogValue(); });
-  Data *data = ir_receiver::ReceiveData();
+  Data *data = ir_receiver::ReceiveData(false);
 
-  movement_manager->Process(data);
+  movement_manager->Process(data, false);
 
   free(data);
-
   data = NULL;
 
   intelligent_led::SetRandomColorOnNextLed();

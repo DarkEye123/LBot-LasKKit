@@ -4,51 +4,56 @@
 
 #include "ir_receiver.h"
 
-IRrecv irrecv(IR_RECEIVER_PIN);
 unsigned long received_code = 0;
 
 namespace ir_receiver
 {
     void Setup()
     {
-        irrecv.enableIRIn();
-        irrecv.blink13(true);
+        IrReceiver.begin(IR_RECEIVER_PIN, ENABLE_LED_FEEDBACK);
+    }
+
+    void LogValue(Data *data, bool debug)
+    {
+        if (debug && data->received)
+        {
+            Serial.print("IrReceiver.decodedIRData.decodedRawData ");
+            Serial.println(IrReceiver.decodedIRData.decodedRawData, DEC);
+            Serial.print("IrReceiver.decodedIRData.command ");
+            Serial.println(IrReceiver.decodedIRData.command, DEC);
+            Serial.print("IrReceiver.decodedIRData.protocol ");
+            Serial.println(IrReceiver.decodedIRData.protocol, DEC);
+            Serial.print("IrReceiver.decodedIRData.flags ");
+            Serial.println(IrReceiver.decodedIRData.flags, DEC);
+
+            Serial.print("ir_receiver:: received DATA: ");
+            Serial.println(data->data, DEC);
+            Serial.flush();
+        }
     }
 
     /*
      * Be sure to call free(variable) after the call
      */
-    Data *ReceiveData()
+    Data *ReceiveData(bool debug)
     {
-        decode_results received_data;
-
         struct Data *data = (Data *)malloc(sizeof(Data));
         data->data = 0;
         data->received = false;
 
-        if (irrecv.decode(&received_data))
+        if (IrReceiver.decode())
         {
             data->received = true;
-            if (received_data.value != REPEAT)
+            if (IrReceiver.decodedIRData.flags != IRDATA_FLAGS_IS_REPEAT)
             {
-                received_code = received_data.value;
+                received_code = IrReceiver.decodedIRData.decodedRawData;
             }
             data->data = received_code;
-            irrecv.resume(); // more like a reset of the state really
+            IrReceiver.resume(); // more like a reset of the state really
         }
+
+        LogValue(data, debug);
 
         return data;
-    }
-
-    void LogValue()
-    {
-        Data *data = ReceiveData();
-        if (data->received)
-        {
-            Serial.print("received IR_DATA: ");
-            Serial.println(data->data, DEC);
-        }
-        free(data);
-        data = NULL;
     }
 }

@@ -12,8 +12,7 @@ struct Data
 namespace ir_receiver
 {
     void Setup();
-    void LogValue();
-    Data *ReceiveData();
+    Data *ReceiveData(bool debug = false);
 }
 
 #endif

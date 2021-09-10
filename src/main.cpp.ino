@@ -6,11 +6,14 @@
 #include "../lib/ir_receiver/ir_receiver.h"
 #include "../lib/motors/motor_manager.h"
 #include "../lib/ultrasonic_sensor/ultrasonic_sensor.h"
+#include "../lib/infrared_line_sensor/infrared_line_sensor.h"
 
 #include "Arduino.h"
 
 movement_manager::MovementManager *mmanager = nullptr;
 ultrasonic_sensor_ns::UltraSonicSensor *ultrasonic_sensor = nullptr;
+
+bool possible_collision = false;
 
 void setup()
 {
@@ -32,13 +35,14 @@ void loop()
 {
   // integrated_led::Blink(true, 500); // for now this fights with intelligent leds on PIN 13 --> I need to check registers
 
-  ultrasonic_sensor->MeasureDistance(true);
+  ultrasonic_sensor->MeasureDistance(false);
+  possible_collision = ultrasonic_sensor->IsDetectingImminentCollision() || infrared_line_sensor::IsDetectingNoPath();
   button::RunOnPress([](void)
                      { light_sensor::LogValue(); });
   Data *data = ir_receiver::ReceiveData(false);
 
-  mmanager->Process(data, ultrasonic_sensor->IsDetectingImminentCollision(), false);
-  if (ultrasonic_sensor->IsDetectingImminentCollision())
+  mmanager->Process(data, possible_collision, false);
+  if (possible_collision)
   {
     bell::Buzz(100);
   }

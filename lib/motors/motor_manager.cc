@@ -196,7 +196,7 @@ namespace movement_manager
                     Serial.print("MovementManager::Process::IsProcessing ");
                     Serial.println(is_processing);
                 }
-                if (!is_processing)
+                if (!is_processing || imminent_collision_detected)
                 {
 
                     if (last_command != STOP_CMD)
@@ -209,7 +209,7 @@ namespace movement_manager
                 }
             }
         }
-        else if (!this->IsProcessing())
+        else if (!this->IsProcessing() || this->last_command == MOVE_FORWARD_CMD && imminent_collision_detected)
         {
             if (debug)
                 Serial.println("MovementManager::Process::StopMovement");

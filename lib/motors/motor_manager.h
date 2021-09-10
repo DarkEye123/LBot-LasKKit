@@ -51,7 +51,7 @@ namespace movement_manager
         void SpeedDown();
         // void MoveForward(unsigned short speed = 255); // 255 is ok for batteries
         void StopMovement(void);
-        void Process(Data *data, boolean debug = false, boolean debug_all = false);
+        void Process(Data *data, boolean imminent_collision_detected, boolean debug = false, boolean debug_all = false);
         boolean IsProcessing();
         boolean IsSupportedCmd(unsigned long cmd);
     };

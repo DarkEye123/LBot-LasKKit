@@ -78,7 +78,7 @@ namespace movement_manager
         this->current_speed = max(this->current_speed - MOTORS_SPEED_STEP, MOTORS_MIN_SPEED);
     }
 
-    void MovementManager::Process(Data *data, boolean debug, boolean debug_all)
+    void MovementManager::Process(Data *data, boolean imminent_collision_detected, boolean debug, boolean debug_all)
     {
         if (debug && debug_all)
         {
@@ -105,7 +105,10 @@ namespace movement_manager
                         Serial.flush();
                     }
 
-                    MoveForward(this->current_speed);
+                    if (!imminent_collision_detected)
+                    {
+                        MoveForward(this->current_speed);
+                    }
                     this->last_command = MOVE_FORWARD_CMD;
                 }
 
@@ -157,7 +160,7 @@ namespace movement_manager
                     {
                         SpeedUp();
                         this->last_command = SPEED_MANUPULATION_CMD;
-                        Process(data, debug, debug_all);
+                        Process(data, imminent_collision_detected, debug, debug_all);
                     }
                 }
 
@@ -173,10 +176,14 @@ namespace movement_manager
                     {
                         SpeedDown();
                         this->last_command = SPEED_MANUPULATION_CMD;
-                        Process(data, debug, debug_all);
+                        Process(data, imminent_collision_detected, debug, debug_all);
                     }
                 }
 
+                if (imminent_collision_detected && this->last_command == MOVE_FORWARD_CMD)
+                {
+                    StopMovement();
+                }
                 this->last_timestamp = millis();
             }
             else

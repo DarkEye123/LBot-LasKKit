@@ -4,11 +4,11 @@
 #include "../lib/bell/bell.h"
 #include "../lib/button/button.h"
 #include "../lib/ir_receiver/ir_receiver.h"
-#include "../lib/motors/motors.h"
+#include "../lib/motors/motor_manager.h"
 
 #include "Arduino.h"
 
-motors::MovementManager *movement_manager = nullptr;
+movement_manager::MovementManager *mmanager = nullptr;
 
 void setup()
 {
@@ -21,7 +21,7 @@ void setup()
 
   bell::Setup();
 
-  movement_manager = motors::Setup();
+  mmanager = movement_manager::Setup();
   ir_receiver::Setup(); // makes initial ring to hide (dunno why) TODO
 }
 
@@ -33,7 +33,7 @@ void loop()
                      { light_sensor::LogValue(); });
   Data *data = ir_receiver::ReceiveData(false);
 
-  movement_manager->Process(data, false);
+  mmanager->Process(data, false);
 
   free(data);
   data = NULL;

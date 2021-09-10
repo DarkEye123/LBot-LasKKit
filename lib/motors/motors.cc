@@ -22,12 +22,12 @@ namespace motors
     void Motor::PositiveRotation(unsigned short speed)
     {
         digitalWrite(this->pin, LOW);
-        analogWrite(this->pwm_pin, max(speed + this->correction_offset, MAX_SUPPORTED_SPEED));
+        analogWrite(this->pwm_pin, min(speed + this->correction_offset, MAX_SUPPORTED_SPEED));
     }
 
     void Motor::NegativeRotation(unsigned short speed)
     {
         digitalWrite(this->pin, HIGH);
-        analogWrite(this->pwm_pin, max(speed + this->correction_offset, MAX_SUPPORTED_SPEED));
+        analogWrite(this->pwm_pin, min(speed + this->correction_offset, MAX_SUPPORTED_SPEED));
     }
 };

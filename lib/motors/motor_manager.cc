@@ -132,7 +132,7 @@ namespace movement_manager
                         Serial.flush();
                     }
 
-                    TurnRight(this->current_speed);
+                    TurnRight(this->current_speed / 2);
                     this->last_command = TURN_RIGHT_CMD;
                 }
 
@@ -144,7 +144,7 @@ namespace movement_manager
                         Serial.flush();
                     }
 
-                    TurnLeft(this->current_speed);
+                    TurnLeft(this->current_speed / 2);
                     this->last_command = TURN_LEFT_CMD;
                 }
 

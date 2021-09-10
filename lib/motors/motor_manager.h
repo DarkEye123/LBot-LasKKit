@@ -45,8 +45,8 @@ namespace movement_manager
         ~MovementManager();
         void MoveForward(unsigned short speed = MOTORS_DEFAULT_SPEED); // 500 is ok for usb, not batteries
         void MoveBackward(unsigned short speed = MOTORS_DEFAULT_SPEED);
-        void TurnRight(unsigned short speed = MOTORS_DEFAULT_SPEED);
-        void TurnLeft(unsigned short speed = MOTORS_DEFAULT_SPEED);
+        void TurnRight(unsigned short speed = MOTORS_DEFAULT_SPEED / 2);
+        void TurnLeft(unsigned short speed = MOTORS_DEFAULT_SPEED / 2);
         void SpeedUp();
         void SpeedDown();
         // void MoveForward(unsigned short speed = 255); // 255 is ok for batteries

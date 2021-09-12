@@ -41,9 +41,20 @@ void loop()
   possible_collision = ultrasonic_sensor->IsDetectingImminentCollision() || infrared_line_sensor::IsDetectingNoPath();
   button::RunOnPress([](void)
                      { light_sensor::LogValue(); });
-  Data *data = ir_receiver::ReceiveData(false);
 
-  Data *bt_data = bluetooth_ns::ReceiveData(true);
+  Data *data = bluetooth_ns::ReceiveData(true);
+
+  if (data && data->received)
+  {
+    mmanager->TransformData(data);
+  }
+  else
+  {
+    free(data);
+    data = NULL;
+
+    data = ir_receiver::ReceiveData(false);
+  }
 
   mmanager->Process(data, possible_collision, false);
   if (possible_collision)
@@ -53,9 +64,6 @@ void loop()
 
   free(data);
   data = NULL;
-
-  free(bt_data);
-  bt_data = NULL;
 
   intelligent_led::SetRandomColorOnNextLed();
 }

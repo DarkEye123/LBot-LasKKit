@@ -14,7 +14,7 @@ namespace bluetooth_ns
         BT.begin(9600);
         Serial.println("Bluetooth::initializing...");
         pinMode(13, OUTPUT);
-        pinMode(RX_PIN, INPUT);
+        pinMode(RX_PIN, INPUT_PULLUP);
         pinMode(TX_PIN, OUTPUT);
         ms = millis();
         Serial.println("Bluetooth::done...");
@@ -23,6 +23,9 @@ namespace bluetooth_ns
     Data *ReceiveData(bool debug)
     {
         bool can_print = millis() - ms > 2000;
+        struct Data *data = (Data *)malloc(sizeof(Data));
+        data->data = 0;
+        data->received = false;
         if (BT.available())
         {
             int x = BT.read();
@@ -31,11 +34,14 @@ namespace bluetooth_ns
                 Serial.print("Bluetooth::received ");
                 Serial.println(x, DEC);
             }
+            data->data = x;
+            data->received = true;
         }
         if (can_print)
         {
             BT.write("\nPING BT");
             ms = millis();
         }
+        return data;
     }
 }

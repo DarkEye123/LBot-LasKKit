@@ -78,6 +78,19 @@ namespace movement_manager
         this->current_speed = max(this->current_speed - MOTORS_SPEED_STEP, MOTORS_MIN_SPEED);
     }
 
+    void MovementManager::TransformData(Data *data)
+    {
+        Serial.println("HC DEBUG");
+        Serial.println(data->data, DEC);
+        Serial.println(data->data == MOTORS_FORWARD_BT);
+        data->data = data->data == MOTORS_FORWARD_BT ? MOTORS_FORWARD : data->data;
+        data->data = data->data == MOTORS_BACKWARD_BT ? MOTORS_BACKWARD : data->data;
+        data->data = data->data == MOTORS_LEFT_BT ? MOTORS_LEFT : data->data;
+        data->data = data->data == MOTORS_RIGHT_BT ? MOTORS_RIGHT : data->data;
+        data->data = data->data == MOTORS_SPEED_UP_BT ? MOTORS_SPEED_UP : data->data;
+        data->data = data->data == MOTORS_SPEED_DOWN_BT ? MOTORS_SPEED_DOWN : data->data;
+    }
+
     void MovementManager::Process(Data *data, boolean imminent_collision_detected, boolean debug, boolean debug_all)
     {
         if (debug && debug_all)

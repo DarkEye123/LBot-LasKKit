@@ -10,6 +10,13 @@
 #define MOTORS_SPEED_UP 3860463360
 #define MOTORS_SPEED_DOWN 3910598400
 
+#define MOTORS_FORWARD_BT 103
+#define MOTORS_BACKWARD_BT 102
+#define MOTORS_LEFT_BT 21
+#define MOTORS_RIGHT_BT 22
+#define MOTORS_SPEED_UP_BT 23
+#define MOTORS_SPEED_DOWN_BT 62
+
 #define MOTORS_SUPPORTED_CMD_LIST_LENGTH 6
 #define MOTORS_DEFAULT_SPEED 150
 #define MOTORS_MIN_SPEED 25
@@ -52,6 +59,7 @@ namespace movement_manager
         // void MoveForward(unsigned short speed = 255); // 255 is ok for batteries
         void StopMovement(void);
         void Process(Data *data, boolean imminent_collision_detected, boolean debug = false, boolean debug_all = false);
+        void TransformData(Data *data);
         boolean IsProcessing();
         boolean IsSupportedCmd(unsigned long cmd);
     };

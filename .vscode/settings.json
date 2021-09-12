@@ -1,3 +1,4 @@
 {
-    "C_Cpp.errorSquiggles": "Enabled"
+    "C_Cpp.errorSquiggles": "Enabled",
+    "platformio.baudRate": 115200
 }

@@ -3,11 +3,7 @@
 
 #define IR_RECEIVER_PIN 2
 
-struct Data
-{
-    bool received;
-    unsigned long data;
-};
+#include "common.h"
 
 namespace ir_receiver
 {

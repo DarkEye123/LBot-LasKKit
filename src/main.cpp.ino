@@ -7,6 +7,7 @@
 #include "../lib/motors/motor_manager.h"
 #include "../lib/ultrasonic_sensor/ultrasonic_sensor.h"
 #include "../lib/infrared_line_sensor/infrared_line_sensor.h"
+#include "../lib/bluetooth/bluetooth.h"
 
 #include "Arduino.h"
 
@@ -29,6 +30,7 @@ void setup()
   mmanager = movement_manager::Setup();
   ultrasonic_sensor = ultrasonic_sensor_ns::Setup();
   ir_receiver::Setup(); // makes initial Buzz to hide (dunno why) TODO
+  bluetooth_ns::Setup();
 }
 
 void loop()
@@ -41,6 +43,8 @@ void loop()
                      { light_sensor::LogValue(); });
   Data *data = ir_receiver::ReceiveData(false);
 
+  Data *bt_data = bluetooth_ns::ReceiveData(true);
+
   mmanager->Process(data, possible_collision, false);
   if (possible_collision)
   {
@@ -49,6 +53,9 @@ void loop()
 
   free(data);
   data = NULL;
+
+  free(bt_data);
+  bt_data = NULL;
 
   intelligent_led::SetRandomColorOnNextLed();
 }
